@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>七並べカウンター</title>
+
+  <!-- ホーム画面に追加するための設定 -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="七並べ">
+  <meta name="theme-color" content="#007aff">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>七並べカウンター</h1>
+
+  <!-- プレイヤーの行は、app.js が自動でここに作ります -->
+  <div id="player-list"></div>
+
+  <div id="controls">
+    <button id="add-player">プレイヤーを追加</button>
+    <button id="reset-all">全員リセット</button>
+  </div>
+
+  <script src="app.js"></script>
+
+  <!-- オフライン用の仕組み(sw.js)を登録する -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js");
+      });
+    }
+  </script>
+</body>
+</html>

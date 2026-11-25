@@ -1,0 +1,123 @@
+/* ===== 全体の基本設定 ===== */
+* {
+  box-sizing: border-box; /* 幅の計算に枠線や余白を含める(はみ出し防止) */
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  /* iPhoneの上下の切り欠きやバーに隠れないようにする余白 */
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  font-family: -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif;
+  background: #f2f2f7;
+  color: #1c1c1e;
+  touch-action: manipulation; /* ダブルタップで拡大されるのを防ぐ */
+  -webkit-text-size-adjust: 100%;
+}
+
+h1 {
+  font-size: 20px;
+  text-align: center;
+  margin: 4px 0 12px;
+}
+
+/* ===== プレイヤー1人分のカード ===== */
+.player {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* 上の段:名前の入力欄、リセット、削除 */
+.player-top {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  font-size: 18px; /* 16px未満だとiPhoneが入力時に勝手に拡大するので18px */
+  padding: 8px;
+  border: 1px solid #c7c7cc;
+  border-radius: 8px;
+}
+
+.small-btn {
+  font-size: 14px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: #e5e5ea;
+  color: #1c1c1e;
+}
+
+.remove {
+  color: #d70015; /* 削除は赤い文字にして、見分けやすくする */
+}
+
+/* 下の段:パス回数、-1、+1 */
+.player-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count {
+  flex: 1;
+  font-size: 56px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+}
+
+.minus {
+  width: 64px;
+  height: 56px;
+  font-size: 24px;
+  border: none;
+  border-radius: 12px;
+  background: #e5e5ea;
+  color: #1c1c1e;
+}
+
+.plus {
+  width: 110px;
+  height: 64px;
+  font-size: 28px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  background: #007aff;
+  color: #ffffff;
+}
+
+/* ===== 画面下の操作ボタン ===== */
+#controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+#controls button {
+  flex: 1;
+  font-size: 16px;
+  padding: 14px 8px;
+  border: none;
+  border-radius: 12px;
+  background: #e5e5ea;
+  color: #1c1c1e;
+}
+
+#reset-all {
+  color: #d70015;
+}
+
+/* ボタンを押している間、少し薄くして「押した感」を出す */
+button:active {
+  opacity: 0.6;
+}
