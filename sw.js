@@ -1,5 +1,5 @@
 // 保存しておくファイルの名札(アプリを更新したら、この番号を増やします)
-const CACHE_NAME = "nanarabe-counter-v2";
+const CACHE_NAME = "nanarabe-counter-v3";
 
 // iPhoneに保存しておくファイルの一覧
 const FILES = [
@@ -17,7 +17,12 @@ const FILES = [
 self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(FILES);
+      // cache: "reload" は「手元に古い写しがあっても使わず、ネットから最新を取る」という指定
+      return cache.addAll(
+        FILES.map(function (url) {
+          return new Request(url, { cache: "reload" });
+        })
+      );
     })
   );
   self.skipWaiting(); // 待たずにすぐ新しい版に切り替える
