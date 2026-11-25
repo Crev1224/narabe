@@ -1,5 +1,5 @@
 // 保存しておくファイルの名札(アプリを更新したら、この番号を増やします)
-const CACHE_NAME = "nanarabe-counter-v3";
+const CACHE_NAME = "nanarabe-counter-v4";
 
 // iPhoneに保存しておくファイルの一覧
 const FILES = [

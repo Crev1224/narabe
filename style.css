@@ -3,14 +3,20 @@
   box-sizing: border-box; /* 幅の計算に枠線や余白を含める(はみ出し防止) */
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
-  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  min-height: 100vh;
+  min-height: 100dvh; /* 画面いっぱいの高さ */
+  display: flex;
+  flex-direction: column; /* 上から下へ、縦に並べる */
   font-family: -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif;
   background: #eaf1fb;
   color: #1c1c1e;
   touch-action: manipulation; /* ダブルタップで拡大されるのを防ぐ */
-  -webkit-text-size-adjust: 100%;
 }
 
 button {
@@ -35,50 +41,55 @@ button:disabled {
   align-items: center;
   column-gap: 10px;
   row-gap: 4px;
-  padding: max(10px, env(safe-area-inset-top)) 14px 10px;
+  padding: max(12px, env(safe-area-inset-top)) 14px 12px;
   background: #1f5bb8;
   color: #ffffff;
 }
 
 .logo {
   grid-area: logo;
-  font-size: 30px;
+  font-size: 34px;
   line-height: 1;
 }
 
 #app-header h1 {
   grid-area: title;
   margin: 0;
-  font-size: 20px;
+  font-size: 23px;
 }
 
 .subtitle {
   grid-area: sub;
   margin: 0;
-  font-size: 12px;
+  font-size: 13px;
   color: #dce8fb;
 }
 
 #open-settings {
   grid-area: gear;
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  font-size: 26px;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
 }
 
-/* ===== 中身の幅(PCで横に広がりすぎないように) ===== */
+/* ===== 中身(残りの高さをいっぱいに使う) ===== */
 main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  padding: 12px;
+  padding: 14px 10px max(16px, env(safe-area-inset-bottom));
 }
 
 /* ===== プレイヤーのカード(5列で並ぶ) ===== */
 #player-list {
+  flex: none;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 6px;
@@ -102,9 +113,9 @@ main {
 
 /* カードの上の色つきの部分(名前) */
 .player-head {
-  padding: 5px 2px;
+  padding: 8px 2px;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
   white-space: nowrap;
@@ -120,51 +131,60 @@ main {
 .c4 .player-head { background: #1fb5c4; }
 
 .player-count {
-  padding: 6px 0 4px;
-  font-size: clamp(26px, 8vw, 44px);
+  padding: 8px 0 6px;
+  font-size: clamp(32px, 11vw, 52px);
   font-weight: bold;
   text-align: center;
   line-height: 1.1;
 }
 
+/* カードの中のボタン:スマホでは縦に並べる(+1が上、−1が下) */
 .player-btns {
   display: flex;
-  gap: 3px;
-  padding: 0 4px;
+  flex-direction: column-reverse; /* 並びを逆にして、+1を上に出す */
+  gap: 5px;
+  padding: 0 5px;
 }
 
 .player-btns button {
-  flex: 1;
-  min-width: 0;
-  height: 34px;
+  flex: none;
+  width: 100%;
   padding: 0;
   border: none;
-  border-radius: 7px;
-  font-size: 14px;
+  border-radius: 8px;
   font-weight: bold;
 }
 
-.minus {
-  background: #e5e5ea;
-  color: #1c1c1e;
-}
-
-.plus {
+.player-btns .plus {
+  height: 48px;
+  font-size: 20px;
   background: #1e7cf2;
   color: #ffffff;
 }
 
-/* ===== 選んでいるプレイヤーの大きな表示 ===== */
+.player-btns .minus {
+  height: 38px;
+  font-size: 17px;
+  background: #e5e5ea;
+  color: #1c1c1e;
+}
+
+/* ===== 選んでいるプレイヤーの大きな表示(残りの高さに合わせて広がる) ===== */
 #detail {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 14px;
+  gap: 12px;
+  margin-top: 22px;
 }
 
 .detail-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  padding: 26px 12px 12px;
+  min-height: 170px;
+  padding: 30px 12px 12px;
   background: #ffffff;
   border-radius: 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
@@ -174,42 +194,45 @@ main {
 /* 「〇〇のパス回数」と書かれた、丸い札 */
 .pill {
   position: absolute;
-  top: -12px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
   max-width: 90%;
-  padding: 5px 16px;
+  padding: 6px 18px;
   border-radius: 999px;
   background: #d8e6fb;
-  font-size: 15px;
+  font-size: 17px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 #detail-count {
-  font-size: clamp(72px, 22vw, 110px);
+  flex: 1; /* 余った高さをここで受け取り、数字を真ん中に置く */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(96px, 32vw, 150px);
   font-weight: bold;
-  line-height: 1.1;
+  line-height: 1;
 }
 
 .name-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 6px;
   text-align: left;
 }
 
 .name-row span {
-  font-size: 14px;
+  font-size: 15px;
   color: #555555;
 }
 
 #detail-name {
   flex: 1;
   min-width: 0;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #c7c7cc;
   border-radius: 8px;
   font-size: 18px; /* 16px未満だと、iPhoneが入力時に画面を勝手に拡大するため18px */
@@ -222,10 +245,10 @@ main {
 
 .detail-actions button {
   flex: 1;
-  padding: 14px 8px;
+  padding: 18px 8px;
   border: none;
   border-radius: 12px;
-  font-size: 17px;
+  font-size: 19px;
 }
 
 #reset-one {
@@ -242,13 +265,13 @@ main {
 #add-player {
   display: block;
   width: 100%;
-  margin-top: 14px;
-  padding: 16px 8px;
+  margin-top: 12px;
+  padding: 20px 8px;
   border: none;
   border-radius: 12px;
   background: #1e7cf2;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -266,17 +289,17 @@ dialog::backdrop {
 
 dialog h2 {
   margin: 0 0 16px;
-  font-size: 18px;
+  font-size: 19px;
 }
 
 dialog button {
   display: block;
   width: 100%;
   margin-top: 10px;
-  padding: 14px 8px;
+  padding: 16px 8px;
   border: none;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 17px;
   background: #e5e5ea;
   color: #1c1c1e;
 }
@@ -313,18 +336,32 @@ dialog button {
     font-size: 48px;
   }
 
+  /* PCでは、−1と+1を横に並べる */
+  .player-btns {
+    flex-direction: row;
+  }
+
   .player-btns button {
+    flex: 1;
+    width: auto;
+  }
+
+  .player-btns .plus,
+  .player-btns .minus {
     height: 44px;
     font-size: 18px;
   }
 
+  /* PCでは、下の表示を画面いっぱいに伸ばさない */
   #detail {
+    flex: none;
     flex-direction: row;
     align-items: stretch;
   }
 
   .detail-main {
     flex: 1;
+    min-height: 200px;
   }
 
   #detail-count {
